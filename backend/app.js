@@ -22,7 +22,12 @@ mongoose.connect(MONGODB_URI)
 
 // CORS Configuration - Allow frontend requests
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
+  origin: [
+    'http://localhost:3000', 
+    'http://127.0.0.1:3000',
+    'https://we-vd27.vercel.app',
+    /\.vercel\.app$/  // Allow all Vercel preview deployments
+  ],
   credentials: true
 }));
 
