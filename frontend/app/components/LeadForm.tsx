@@ -43,13 +43,16 @@ export default function LeadForm() {
     if (!formData.name.trim()) {
       newErrors.name = "Name is required";
       isValid = false;
+    } else if (formData.name.trim().length < 3) {
+      newErrors.name = "Name must be at least 3 characters";
+      isValid = false;
     }
 
     if (!formData.phone.trim()) {
       newErrors.phone = "Phone number is required";
       isValid = false;
-    } else if (!/^[0-9]{10}$/.test(formData.phone)) {
-      newErrors.phone = "Please enter a valid 10-digit phone number";
+    } else if (!/^[6-9][0-9]{9}$/.test(formData.phone)) {
+      newErrors.phone = "Please enter a valid 10-digit Indian mobile number";
       isValid = false;
     }
 
@@ -103,7 +106,15 @@ export default function LeadForm() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    
+    // Only allow digits for phone field
+    if (name === "phone") {
+      const numericValue = value.replace(/[^0-9]/g, "");
+      setFormData((prev) => ({ ...prev, [name]: numericValue }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
+    
     // Clear error when user starts typing
     if (errors[name as keyof typeof errors]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
