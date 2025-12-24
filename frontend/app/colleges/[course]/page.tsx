@@ -19,8 +19,9 @@ interface College {
 }
 
 async function getCollegesFromAPI(category: string): Promise<College[]> {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:9000";
   try {
-    const response = await fetch(`http://localhost:9000/api/colleges?category=${category}&limit=50`, {
+    const response = await fetch(`${API_URL}/api/colleges?category=${category}&limit=50`, {
       cache: 'no-store'
     });
     const data = await response.json();

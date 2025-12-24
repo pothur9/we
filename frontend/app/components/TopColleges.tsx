@@ -12,7 +12,7 @@ interface College {
   image: string;
 }
 
-const API_URL = "http://localhost:9000/api/colleges";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:9000";
 
 // Color variations for cards
 const cardColors = [
@@ -31,7 +31,7 @@ export default function TopColleges() {
   useEffect(() => {
     const fetchColleges = async () => {
       try {
-        const response = await fetch(`${API_URL}?limit=6`);
+        const response = await fetch(`${API_URL}/api/colleges?limit=6`);
         const data = await response.json();
         if (data.success) {
           setColleges(data.data);

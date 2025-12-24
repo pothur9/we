@@ -26,7 +26,7 @@ interface ApiResponse {
   };
 }
 
-const API_URL = "http://localhost:9000/api/colleges";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:9000";
 
 function SearchContent() {
   const searchParams = useSearchParams();
@@ -52,7 +52,7 @@ function SearchContent() {
         if (city) params.set("city", city);
         if (categorySlug) params.set("category", categorySlug);
         
-        const response = await fetch(`${API_URL}?${params.toString()}`);
+        const response = await fetch(`${API_URL}/api/colleges?${params.toString()}`);
         const data: ApiResponse = await response.json();
         
         if (data.success) {
