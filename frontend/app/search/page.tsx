@@ -5,8 +5,10 @@ import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
-import LeadForm from "../components/LeadForm";
 import { courseCategories, cities, getCategoryBySlug } from "../data/courseData";
+
+// Default college image
+const DEFAULT_COLLEGE_IMAGE = "https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80";
 
 interface College {
   _id: string;
@@ -204,9 +206,12 @@ function SearchContent() {
                   {/* College Image */}
                   <div className="h-48 relative overflow-hidden">
                     <img 
-                      src={college.image} 
+                      src={college.image || DEFAULT_COLLEGE_IMAGE} 
                       alt={college.name}
                       className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = DEFAULT_COLLEGE_IMAGE;
+                      }}
                     />
                     <div className="absolute top-4 right-4 bg-white px-3 py-1 rounded-full flex items-center gap-1 shadow-lg">
                       <i className="fas fa-star text-yellow-400"></i>
@@ -305,7 +310,6 @@ function SearchContent() {
         </div>
       </main>
       <Footer />
-      <LeadForm />
     </>
   );
 }
