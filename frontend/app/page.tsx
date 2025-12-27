@@ -2,7 +2,7 @@ import Navigation from "./components/Navigation";
 import Hero from "./components/Hero";
 import Features from "./components/Features";
 import TopColleges from "./components/TopColleges";
-import PopularCourses from "./components/PopularCourses";
+import TopCourses from "./components/TopCourses";
 import CTA from "./components/CTA";
 import Footer from "./components/Footer";
 
@@ -13,7 +13,7 @@ export default function Home() {
       <Hero />
       <Features />
       <TopColleges />
-      <PopularCourses />
+      <TopCourses />
       <CTA />
       <Footer />
     </main>

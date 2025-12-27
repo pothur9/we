@@ -11,11 +11,13 @@ export default function LeadForm() {
   const [submitError, setSubmitError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
+    email: "",
     phone: "",
     course: "",
   });
   const [errors, setErrors] = useState({
     name: "",
+    email: "",
     phone: "",
     course: "",
   });
@@ -38,13 +40,18 @@ export default function LeadForm() {
 
   const validateForm = () => {
     let isValid = true;
-    const newErrors = { name: "", phone: "", course: "" };
+    const newErrors = { name: "", email: "", phone: "", course: "" };
 
     if (!formData.name.trim()) {
       newErrors.name = "Name is required";
       isValid = false;
     } else if (formData.name.trim().length < 3) {
       newErrors.name = "Name must be at least 3 characters";
+      isValid = false;
+    }
+
+    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
       isValid = false;
     }
 
@@ -90,7 +97,7 @@ export default function LeadForm() {
           setTimeout(() => {
             setIsSubmitted(false);
             setIsOpen(false);
-            setFormData({ name: "", phone: "", course: "" });
+            setFormData({ name: "", email: "", phone: "", course: "" });
           }, 3000);
         } else {
           setSubmitError(data.message || "Failed to submit. Please try again.");
@@ -155,42 +162,42 @@ export default function LeadForm() {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="gradient-bg rounded-t-2xl p-6 relative">
+            <div className="gradient-bg rounded-t-2xl p-4 relative">
               <button
                 onClick={() => setIsOpen(false)}
-                className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors"
+                className="absolute top-3 right-3 text-white/80 hover:text-white transition-colors"
                 aria-label="Close"
               >
-                <i className="fas fa-times text-xl"></i>
+                <i className="fas fa-times text-lg"></i>
               </button>
               <div className="text-center">
-                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <i className="fas fa-graduation-cap text-white text-3xl"></i>
+                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <i className="fas fa-graduation-cap text-white text-xl"></i>
                 </div>
-                <h2 className="text-2xl font-bold text-white">Get Free Counselling</h2>
-                <p className="text-purple-100 mt-2">Fill in your details and we&apos;ll help you find the perfect course</p>
+                <h2 className="text-xl font-bold text-white">Get Free Counselling</h2>
+                <p className="text-purple-100 text-sm mt-1">Fill in your details for expert guidance</p>
               </div>
             </div>
 
             {/* Form Body */}
-            <div className="p-6">
+            <div className="p-4">
               {isSubmitted ? (
-                <div className="text-center py-8">
-                  <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i className="fas fa-check text-green-500 text-4xl"></i>
+                <div className="text-center py-6">
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i className="fas fa-check text-green-500 text-3xl"></i>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-800">Thank You!</h3>
-                  <p className="text-gray-600 mt-2">Our counsellor will contact you shortly.</p>
+                  <h3 className="text-lg font-semibold text-gray-800">Thank You!</h3>
+                  <p className="text-gray-600 text-sm mt-1">Our counsellor will contact you shortly.</p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-3">
                   {/* Name Field */}
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="name" className="block text-xs font-medium text-gray-700 mb-1">
                       Full Name <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
-                      <i className="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                      <i className="fas fa-user absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
                       <input
                         type="text"
                         id="name"
@@ -198,97 +205,159 @@ export default function LeadForm() {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="Enter your full name"
-                        className={`w-full pl-12 pr-4 py-3 border ${
+                        className={`w-full pl-10 pr-3 py-2.5 text-sm border ${
                           errors.name ? "border-red-500" : "border-gray-200"
-                        } rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all`}
+                        } rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all`}
                       />
                     </div>
-                    {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+                    {errors.name && <p className="text-red-500 text-xs mt-0.5">{errors.name}</p>}
+                  </div>
+
+                  {/* Email Field */}
+                  <div>
+                    <label htmlFor="email" className="block text-xs font-medium text-gray-700 mb-1">
+                      Email Address
+                    </label>
+                    <div className="relative">
+                      <i className="fas fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="Enter your email"
+                        className={`w-full pl-10 pr-3 py-2.5 text-sm border ${
+                          errors.email ? "border-red-500" : "border-gray-200"
+                        } rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all`}
+                      />
+                    </div>
+                    {errors.email && <p className="text-red-500 text-xs mt-0.5">{errors.email}</p>}
                   </div>
 
                   {/* Phone Field */}
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="phone" className="block text-xs font-medium text-gray-700 mb-1">
                       Phone Number <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
-                      <i className="fas fa-phone absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                      <i className="fas fa-phone absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
                       <input
                         type="tel"
                         id="phone"
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        placeholder="Enter your phone number"
+                        placeholder="Enter phone number"
                         maxLength={10}
-                        className={`w-full pl-12 pr-4 py-3 border ${
+                        className={`w-full pl-10 pr-3 py-2.5 text-sm border ${
                           errors.phone ? "border-red-500" : "border-gray-200"
-                        } rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all`}
+                        } rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all`}
                       />
                     </div>
-                    {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
+                    {errors.phone && <p className="text-red-500 text-xs mt-0.5">{errors.phone}</p>}
                   </div>
 
                   {/* Course Field */}
                   <div>
-                    <label htmlFor="course" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="course" className="block text-xs font-medium text-gray-700 mb-1">
                       Course Interested In <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
-                      <i className="fas fa-book absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                      <i className="fas fa-book absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
                       <select
                         id="course"
                         name="course"
                         value={formData.course}
                         onChange={handleChange}
-                        className={`w-full pl-12 pr-4 py-3 border ${
+                        className={`w-full pl-10 pr-8 py-2.5 text-sm border ${
                           errors.course ? "border-red-500" : "border-gray-200"
-                        } rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 appearance-none transition-all`}
+                        } rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 appearance-none transition-all`}
                       >
                         <option value="">Select a course</option>
-                        <option value="ENGINEERING">Engineering</option>
-                        <option value="MBA">MBA</option>
-                        <option value="MCA">MCA</option>
-                        <option value="B.Sc Nursing">B.Sc Nursing</option>
-                        <option value="General Nursing">General Nursing</option>
-                        <option value="BCA">BCA</option>
-                        <option value="BBA">BBA</option>
-                        <option value="B.Com">B.Com</option>
-                        <option value="BSc">BSc</option>
-                        <option value="M.Tech">M.Tech</option>
-                        <option value="B.Pharm">B.Pharm</option>
-                        <option value="B.Optom">B.Optom</option>
-                        <option value="BASLP">BASLP</option>
-                        <option value="BPT">BPT</option>
-                        <option value="BOT">BOT</option>
-                        <option value="Pharm D">Pharm D</option>
-                        <option value="MD">MD</option>
-                        <option value="MS">MS</option>
-                        <option value="MDS">MDS</option>
-                        <option value="M.Phil">M.Phil</option>
-                        <option value="M.Sc">M.Sc</option>
-                        <option value="MOT">MOT</option>
-                        <option value="M.Pharm">M.Pharm</option>
-                        <option value="MPT">MPT</option>
-                        <option value="Post Basic Diploma">Post Basic Diploma</option>
-                        <option value="Post Graduate Diploma">Post Graduate Diploma</option>
-                        <option value="M.Ch">M.Ch</option>
-                        <option value="BA">BA</option>
-                        <option value="M.Com">M.Com</option>
-                        <option value="MSW">MSW</option>
-                        <option value="BA LLB">BA LLB</option>
-                        <option value="BHM">BHM</option>
-                        <option value="GNM">GNM</option>
+                        <optgroup label="Core Medical Degrees">
+                          <option value="MBBS">MBBS</option>
+                          <option value="BDS">BDS (Dental)</option>
+                          <option value="BAMS">BAMS (Ayurveda)</option>
+                          <option value="BHMS">BHMS (Homeopathy)</option>
+                          <option value="BUMS">BUMS (Unani)</option>
+                          <option value="BVSc">BVSc & AH (Veterinary)</option>
+                        </optgroup>
+                        <optgroup label="Nursing">
+                          <option value="B.Sc Nursing">B.Sc Nursing</option>
+                          <option value="GNM">GNM Nursing</option>
+                          <option value="ANM">ANM (Auxiliary Nursing)</option>
+                          <option value="M.Sc Nursing">M.Sc Nursing</option>
+                        </optgroup>
+                        <optgroup label="Pharmacy">
+                          <option value="B.Pharm">B.Pharm</option>
+                          <option value="D.Pharm">D.Pharm</option>
+                          <option value="M.Pharm">M.Pharm</option>
+                          <option value="Pharm.D">Pharm.D</option>
+                        </optgroup>
+                        <optgroup label="Therapy & Rehabilitation">
+                          <option value="BPT">BPT (Physiotherapy)</option>
+                          <option value="MPT">MPT (Master of Physiotherapy)</option>
+                          <option value="BOT">BOT (Occupational Therapy)</option>
+                          <option value="MOT">MOT (Occupational Therapy)</option>
+                          <option value="BASLP">BASLP (Speech & Audiology)</option>
+                        </optgroup>
+                        <optgroup label="Medical Lab & Diagnostics">
+                          <option value="B.Sc MLT">B.Sc MLT (Lab Technology)</option>
+                          <option value="DMLT">DMLT (Diploma in MLT)</option>
+                          <option value="B.Sc Radiology">B.Sc Radiology</option>
+                          <option value="B.Sc Medical Imaging">B.Sc Medical Imaging</option>
+                        </optgroup>
+                        <optgroup label="Cardiovascular & Critical Care">
+                          <option value="B.Sc CVT">B.Sc Cardiovascular Technology</option>
+                          <option value="B.Sc Perfusion">B.Sc Perfusion Technology</option>
+                          <option value="B.Sc Dialysis">B.Sc Dialysis Technology</option>
+                          <option value="B.Sc Respiratory">B.Sc Respiratory Therapy</option>
+                        </optgroup>
+                        <optgroup label="Specialized Technology">
+                          <option value="B.Sc OTT">B.Sc Operation Theatre Tech</option>
+                          <option value="B.Sc NEP">B.Sc Neuro Electro Physiology</option>
+                          <option value="B.Sc Nuclear Medicine">B.Sc Nuclear Medicine</option>
+                          <option value="B.Sc Radiotherapy">B.Sc Radiotherapy Technology</option>
+                        </optgroup>
+                        <optgroup label="Public Health & Management">
+                          <option value="MPH">MPH (Public Health)</option>
+                          <option value="MHA">MHA (Hospital Administration)</option>
+                          <option value="MBA Hospital Admin">MBA Hospital Administration</option>
+                          <option value="Health Informatics">Health Informatics</option>
+                          <option value="Medical Coding">Medical Coding</option>
+                        </optgroup>
+                        <optgroup label="Research & Forensic">
+                          <option value="Clinical Research">Clinical Research</option>
+                          <option value="Forensic Science">Forensic Science</option>
+                          <option value="Biomedical Engineering">Biomedical Engineering</option>
+                        </optgroup>
+                        <optgroup label="Optometry & Vision">
+                          <option value="B.Optom">B.Optom</option>
+                          <option value="M.Optom">M.Optom</option>
+                        </optgroup>
+                        <optgroup label="Certificate Courses">
+                          <option value="CNA">CNA (Certified Nursing Assistant)</option>
+                          <option value="Phlebotomy">Phlebotomy Technician</option>
+                          <option value="ECG Technician">ECG Technician</option>
+                          <option value="EMT">EMT (Emergency Medical Tech)</option>
+                        </optgroup>
+                        <optgroup label="PG Specializations">
+                          <option value="MD">MD (Doctor of Medicine)</option>
+                          <option value="MS">MS (Master of Surgery)</option>
+                          <option value="MDS">MDS (Dental Surgery)</option>
+                          <option value="M.Ch">M.Ch (Super Specialization)</option>
+                        </optgroup>
                       </select>
-                      <i className="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                      <i className="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm pointer-events-none"></i>
                     </div>
-                    {errors.course && <p className="text-red-500 text-sm mt-1">{errors.course}</p>}
+                    {errors.course && <p className="text-red-500 text-xs mt-0.5">{errors.course}</p>}
                   </div>
 
                   {/* Error Message */}
                   {submitError && (
-                    <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl text-sm mt-4">
-                      <i className="fas fa-exclamation-circle mr-2"></i>
+                    <div className="bg-red-50 border border-red-200 text-red-600 px-3 py-2 rounded-lg text-xs mt-2">
+                      <i className="fas fa-exclamation-circle mr-1"></i>
                       {submitError}
                     </div>
                   )}
@@ -297,7 +366,7 @@ export default function LeadForm() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className={`w-full gradient-bg text-white py-4 rounded-xl font-semibold text-lg hover:shadow-xl transition-all transform hover:scale-[1.02] mt-6 ${
+                    className={`w-full gradient-bg text-white py-3 rounded-lg font-semibold text-sm hover:shadow-lg transition-all mt-3 ${
                       isLoading ? "opacity-70 cursor-not-allowed" : ""
                     }`}
                   >
@@ -313,7 +382,7 @@ export default function LeadForm() {
                     )}
                   </button>
 
-                  <p className="text-center text-sm text-gray-500 mt-4">
+                  <p className="text-center text-xs text-gray-500 mt-2">
                     <i className="fas fa-lock mr-1"></i> Your information is 100% secure
                   </p>
                 </form>

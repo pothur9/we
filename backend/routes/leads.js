@@ -30,19 +30,18 @@ async function sendLeadNotification(lead) {
               <td style="padding: 10px; font-weight: bold; color: #555;">Name:</td>
               <td style="padding: 10px; color: #333;">${lead.name}</td>
             </tr>
-            <tr style="background: #fff;">
+            <tr>
               <td style="padding: 10px; font-weight: bold; color: #555;">Phone:</td>
               <td style="padding: 10px; color: #333;"><a href="tel:${lead.phone}" style="color: #2A8EA0;">${lead.phone}</a></td>
+            </tr>
+            <tr style="background: #fff;">
+              <td style="padding: 10px; font-weight: bold; color: #555;">Email:</td>
+              <td style="padding: 10px; color: #333;">${lead.email ? `<a href="mailto:${lead.email}" style="color: #2A8EA0;">${lead.email}</a>` : 'Not provided'}</td>
             </tr>
             <tr>
               <td style="padding: 10px; font-weight: bold; color: #555;">Course:</td>
               <td style="padding: 10px; color: #333;">${lead.course}</td>
             </tr>
-            <tr style="background: #fff;">
-              <td style="padding: 10px; font-weight: bold; color: #555;">Date:</td>
-              <td style="padding: 10px; color: #333;">${new Date(lead.createdAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</td>
-            </tr>
-          </table>
           <div style="margin-top: 20px; text-align: center;">
             <a href="https://wa.me/91${lead.phone}" style="display: inline-block; background: #25D366; color: white; padding: 12px 24px; border-radius: 5px; text-decoration: none; font-weight: bold;">
               📱 Contact on WhatsApp
@@ -67,7 +66,7 @@ async function sendLeadNotification(lead) {
 // POST /api/leads - Create a new lead
 router.post('/', async function(req, res) {
   try {
-    const { name, phone, course } = req.body;
+    const { name, email, phone, course } = req.body;
 
     // Validate required fields
     if (!name || !phone || !course) {
@@ -88,6 +87,7 @@ router.post('/', async function(req, res) {
     // Create new lead
     const lead = new Lead({
       name: name.trim(),
+      email: email ? email.trim().toLowerCase() : undefined,
       phone: phone.trim(),
       course
     });

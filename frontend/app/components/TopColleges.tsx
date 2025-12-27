@@ -14,14 +14,14 @@ interface College {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:9000";
 
-// Color variations for cards
+// Medical-themed color variations for cards
 const cardColors = [
+  { gradient: "from-red-400 to-red-600", iconColor: "text-red-600" },
+  { gradient: "from-teal-400 to-teal-600", iconColor: "text-teal-600" },
   { gradient: "from-blue-400 to-blue-600", iconColor: "text-blue-600" },
   { gradient: "from-green-400 to-green-600", iconColor: "text-green-600" },
-  { gradient: "from-red-400 to-red-600", iconColor: "text-red-600" },
   { gradient: "from-purple-400 to-purple-600", iconColor: "text-purple-600" },
-  { gradient: "from-orange-400 to-orange-600", iconColor: "text-orange-600" },
-  { gradient: "from-teal-400 to-teal-600", iconColor: "text-teal-600" },
+  { gradient: "from-pink-400 to-pink-600", iconColor: "text-pink-600" },
 ];
 
 export default function TopColleges() {
@@ -31,7 +31,8 @@ export default function TopColleges() {
   useEffect(() => {
     const fetchColleges = async () => {
       try {
-        const response = await fetch(`${API_URL}/api/colleges?limit=6`);
+        // Fetch medical colleges specifically
+        const response = await fetch(`${API_URL}/api/colleges?limit=6&category=medical`);
         const data = await response.json();
         if (data.success) {
           setColleges(data.data);
@@ -46,20 +47,29 @@ export default function TopColleges() {
     fetchColleges();
   }, []);
 
+  const openLeadForm = () => {
+    window.dispatchEvent(new Event('openLeadForm'));
+  };
+
   return (
     <section id="colleges" className="py-20 px-4 bg-gray-50 scroll-mt-16">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-12">
           <div>
-            <h2 className="text-4xl font-bold text-gray-900 mb-2">Top Colleges</h2>
-            <p className="text-xl text-gray-600">Explore the best institutions in Karnataka</p>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+                <i className="fas fa-stethoscope text-red-600 text-xl"></i>
+              </div>
+              <h2 className="text-4xl font-bold text-gray-900">Top Medical Colleges</h2>
+            </div>
+            <p className="text-xl text-gray-600">Explore the best medical institutions in Karnataka</p>
           </div>
-          <Link 
-            href="/search"
+          <button 
+            onClick={openLeadForm}
             className="text-purple-600 font-semibold hover:text-purple-700 flex items-center"
           >
             View All <i className="fas fa-arrow-right ml-2"></i>
-          </Link>
+          </button>
         </div>
         
         {loading ? (
@@ -79,9 +89,14 @@ export default function TopColleges() {
                         <i className="fas fa-star text-yellow-400"></i> {college.rating}
                       </span>
                     </div>
+                    <div className="absolute top-4 left-4">
+                      <span className="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+                        <i className="fas fa-stethoscope"></i> Medical
+                      </span>
+                    </div>
                     <div className="absolute bottom-4 left-4">
                       <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-lg">
-                        <i className={`fas fa-university ${colors.iconColor} text-2xl`}></i>
+                        <i className={`fas fa-hospital ${colors.iconColor} text-2xl`}></i>
                       </div>
                     </div>
                   </div>
@@ -92,19 +107,19 @@ export default function TopColleges() {
                       {college.location}
                     </p>
                     <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="bg-purple-100 text-purple-700 text-xs px-3 py-1 rounded-full">
+                      <span className="bg-red-100 text-red-700 text-xs px-3 py-1 rounded-full">
                         {college.city}
                       </span>
                       <span className="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full">
-                        Top Rated
+                        NAAC Accredited
                       </span>
                     </div>
-                    <Link 
-                      href={`/search?q=${encodeURIComponent(college.name)}`}
+                    <button 
+                      onClick={openLeadForm}
                       className="w-full gradient-bg text-white py-3 rounded-xl font-semibold hover:shadow-lg transition block text-center"
                     >
                       View Details
-                    </Link>
+                    </button>
                   </div>
                 </div>
               );
@@ -114,12 +129,12 @@ export default function TopColleges() {
         
         {/* Mobile View All Button */}
         <div className="mt-8 text-center md:hidden">
-          <Link
-            href="/search"
+          <button
+            onClick={openLeadForm}
             className="inline-flex items-center gradient-bg text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transition"
           >
-            View All Colleges <i className="fas fa-arrow-right ml-2"></i>
-          </Link>
+            View All Medical Colleges <i className="fas fa-arrow-right ml-2"></i>
+          </button>
         </div>
       </div>
     </section>

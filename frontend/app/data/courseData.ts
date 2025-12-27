@@ -43,9 +43,66 @@ export const courseCategories: Category[] = [
         courses: [
             { name: "MBBS", slug: "mbbs" },
             { name: "MD", slug: "md" },
+            { name: "MS", slug: "ms" },
+            { name: "BDS (Dental)", slug: "bds" },
+            { name: "MDS (Dental)", slug: "mds" },
+            { name: "BAMS (Ayurveda)", slug: "bams" },
+            { name: "BHMS (Homeopathy)", slug: "bhms" },
+            { name: "BUMS (Unani)", slug: "bums" },
+            { name: "BVSc & AH (Veterinary)", slug: "bvsc" },
             { name: "BMLT", slug: "bmlt" },
             { name: "MPT", slug: "mpt" },
             { name: "MPH", slug: "mph" },
+        ]
+    },
+    {
+        name: "Nursing",
+        slug: "nursing",
+        icon: "fas fa-heartbeat",
+        courses: [
+            { name: "B.Sc. Nursing", slug: "bsc-nursing" },
+            { name: "GNM Nursing", slug: "gnm-nursing" },
+            { name: "M.Sc. Nursing", slug: "msc-nursing" },
+            { name: "ANM (Auxiliary Nursing)", slug: "anm" },
+            { name: "Post Basic B.Sc. Nursing", slug: "post-basic-nursing" },
+        ]
+    },
+    {
+        name: "Pharmacy",
+        slug: "pharmacy",
+        icon: "fas fa-pills",
+        courses: [
+            { name: "B.Pharm", slug: "bpharm" },
+            { name: "D.Pharm", slug: "dpharm" },
+            { name: "M.Pharm", slug: "mpharm" },
+            { name: "Pharm.D", slug: "pharmd" },
+        ]
+    },
+    {
+        name: "Physiotherapy",
+        slug: "physiotherapy",
+        icon: "fas fa-walking",
+        courses: [
+            { name: "BPT (Physiotherapy)", slug: "bpt" },
+            { name: "MPT (Master of Physiotherapy)", slug: "mpt-physio" },
+            { name: "BOT (Occupational Therapy)", slug: "bot" },
+            { name: "MOT (Occupational Therapy)", slug: "mot" },
+            { name: "BASLP (Speech & Audiology)", slug: "baslp" },
+        ]
+    },
+    {
+        name: "Allied Health Sciences",
+        slug: "allied-health",
+        icon: "fas fa-vials",
+        courses: [
+            { name: "B.Sc. MLT (Lab Technology)", slug: "bsc-mlt" },
+            { name: "B.Sc. Radiology", slug: "bsc-radiology" },
+            { name: "B.Sc. Cardiovascular Technology", slug: "bsc-cvt" },
+            { name: "B.Sc. OTT (Operation Theatre)", slug: "bsc-ott" },
+            { name: "B.Sc. Dialysis Technology", slug: "bsc-dialysis" },
+            { name: "B.Sc. Respiratory Therapy", slug: "bsc-respiratory" },
+            { name: "B.Sc. Optometry", slug: "bsc-optometry" },
+            { name: "B.Sc. Perfusion Technology", slug: "bsc-perfusion" },
         ]
     },
     {
@@ -195,15 +252,6 @@ export const courseCategories: Category[] = [
             { name: "M.Ed.", slug: "med" },
             { name: "M.P.Ed.", slug: "mped" },
             { name: "D.Ed.", slug: "ded" },
-        ]
-    },
-    {
-        name: "Nursing",
-        slug: "nursing",
-        icon: "fas fa-heartbeat",
-        courses: [
-            { name: "B.Sc. Nursing", slug: "bsc-nursing" },
-            { name: "M.Sc. in Nursing", slug: "msc-nursing" },
         ]
     },
 ];

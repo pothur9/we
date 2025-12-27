@@ -5,6 +5,7 @@ import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
+import LeadForm from "../components/LeadForm";
 import { courseCategories, cities, getCategoryBySlug } from "../data/courseData";
 
 interface College {
@@ -94,6 +95,10 @@ function SearchContent() {
   } else if (query) {
     pageTitle = `Search results for "${query}"`;
   }
+
+  const openLeadForm = () => {
+    window.dispatchEvent(new Event('openLeadForm'));
+  };
 
   return (
     <>
@@ -227,7 +232,10 @@ function SearchContent() {
                           </span>
                         )}
                       </div>
-                      <button className="gradient-bg text-white px-4 py-2 rounded-lg font-medium hover:shadow-lg transition text-sm">
+                      <button 
+                        onClick={openLeadForm}
+                        className="gradient-bg text-white px-4 py-2 rounded-lg font-medium hover:shadow-lg transition text-sm"
+                      >
                         View Details
                       </button>
                     </div>
@@ -297,6 +305,7 @@ function SearchContent() {
         </div>
       </main>
       <Footer />
+      <LeadForm />
     </>
   );
 }

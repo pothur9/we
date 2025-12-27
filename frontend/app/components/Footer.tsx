@@ -1,4 +1,10 @@
+"use client";
+
 export default function Footer() {
+  const openLeadForm = () => {
+    window.dispatchEvent(new Event('openLeadForm'));
+  };
+
   return (
     <footer id="contact" className="bg-gray-900 text-white py-12 px-4">
       <div className="max-w-7xl mx-auto">
@@ -26,25 +32,25 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Resources</h4>
             <ul className="space-y-2 text-gray-400 text-sm">
-              <li><a href="#" className="hover:text-white transition">Blog</a></li>
-              <li><a href="#" className="hover:text-white transition">News</a></li>
-              <li><a href="#" className="hover:text-white transition">Study Abroad</a></li>
-              <li><a href="#" className="hover:text-white transition">Scholarships</a></li>
+              <li><button onClick={openLeadForm} className="hover:text-white transition">Blog</button></li>
+              <li><button onClick={openLeadForm} className="hover:text-white transition">News</button></li>
+              <li><button onClick={openLeadForm} className="hover:text-white transition">Study Abroad</button></li>
+              <li><button onClick={openLeadForm} className="hover:text-white transition">Scholarships</button></li>
             </ul>
           </div>
           
           <div>
             <h4 className="font-semibold mb-4">Connect</h4>
             <div className="flex space-x-4 mb-4">
-              <a href="#" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-600 transition">
+              <button onClick={openLeadForm} className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-600 transition">
                 <i className="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-600 transition">
+              </button>
+              <button onClick={openLeadForm} className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-600 transition">
                 <i className="fab fa-twitter"></i>
-              </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-600 transition">
+              </button>
+              <button onClick={openLeadForm} className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-600 transition">
                 <i className="fab fa-instagram"></i>
-              </a>
+              </button>
             </div>
             <p className="text-gray-400 text-sm">contact@WeForUni.in</p>
           </div>
