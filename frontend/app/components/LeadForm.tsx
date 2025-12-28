@@ -50,7 +50,10 @@ export default function LeadForm() {
       isValid = false;
     }
 
-    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+      isValid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = "Please enter a valid email address";
       isValid = false;
     }
@@ -216,7 +219,7 @@ export default function LeadForm() {
                   {/* Email Field */}
                   <div>
                     <label htmlFor="email" className="block text-xs font-medium text-gray-700 mb-1">
-                      Email Address
+                      Email Address <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
                       <i className="fas fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
