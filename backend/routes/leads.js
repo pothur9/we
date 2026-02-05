@@ -7,16 +7,16 @@ var Lead = require('../models/Lead');
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'chowdaryp697@gmail.com',
-    pass: 'bxqbwtfsarifmdia'
+    user: 'info.weforuni@gmail.com',
+    pass: 'nfjgycbsgivhvtid'
   }
 });
 
 // Function to send email notification
 async function sendLeadNotification(lead) {
   const mailOptions = {
-    from: 'chowdaryp697@gmail.com',
-    to: 'chowdaryp697@gmail.com',
+    from: 'info.weforuni@gmail.com',
+    to: 'info.weforuni@gmail.com',
     subject: `🎓 New Lead: ${lead.name} - ${lead.course}`,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px;">

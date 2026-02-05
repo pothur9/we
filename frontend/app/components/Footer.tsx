@@ -52,12 +52,12 @@ export default function Footer() {
                 <i className="fab fa-instagram"></i>
               </button>
             </div>
-            <p className="text-gray-400 text-sm">contact@WeForUni.in</p>
+            <p className="text-gray-400 text-sm">Contact@weforuni.com</p>
           </div>
         </div>
         
         <div className="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm">
-          <p>&copy; 2025 We For Uni. All rights reserved.</p>
+          <p>&copy; 2026 We For Uni. All rights reserved.</p>
         </div>
       </div>
     </footer>
