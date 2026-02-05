@@ -48,9 +48,9 @@ export default function Footer() {
               <button onClick={openLeadForm} className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-600 transition">
                 <i className="fab fa-twitter"></i>
               </button>
-              <button onClick={openLeadForm} className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-600 transition">
+              <a href="https://www.instagram.com/weforuni?igsh=eW5lMzU4NW0yNG52" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-600 transition">
                 <i className="fab fa-instagram"></i>
-              </button>
+              </a>
             </div>
             <p className="text-gray-400 text-sm">Contact@weforuni.com</p>
           </div>
