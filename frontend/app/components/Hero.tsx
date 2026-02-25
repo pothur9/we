@@ -57,9 +57,18 @@ export default function Hero() {
   };
 
   return (
-    <section id="home" className="pt-32 pb-20 px-4 gradient-bg relative overflow-hidden scroll-mt-16">
-      <div className="absolute top-0 right-0 w-96 h-96 bg-white opacity-10 rounded-full -mr-48 -mt-48"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-white opacity-10 rounded-full -ml-48 -mb-48"></div>
+    <section
+      id="home"
+      className="pt-32 pb-20 px-4 relative overflow-hidden scroll-mt-16"
+      style={{
+        backgroundImage: "url('https://iitdh.ac.in/sites/default/files/2023-10/campus1.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      {/* Dark overlay for text readability */}
+      <div className="absolute inset-0 bg-black opacity-50"></div>
       
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-12">

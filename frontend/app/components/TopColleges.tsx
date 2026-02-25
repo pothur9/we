@@ -24,6 +24,98 @@ const cardColors = [
   { gradient: "from-pink-400 to-pink-600", iconColor: "text-pink-600" },
 ];
 
+// Override images by college name (partial, case-insensitive match)
+const collegeImageOverrides: { keywords: string[]; image: string }[] = [
+  {
+    keywords: ["iim", "bangalore", "management"],
+    image:
+      "https://imgs.search.brave.com/aqpFS0bSlj5-z0E2VX8ZIxUSfELHJl0jcnpNg3XIVvI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9kcnVw/YWwubWJhdW5pdmVy/c2UuY29tL3NpdGVz/L2RlZmF1bHQvZmls/ZXMvMjAyNS0wNi9w/dWJsaWMlMjAoMSkl/MjAoMSkuanBn",
+  },
+  {
+    keywords: ["iisc", "science", "indian institute of science"],
+    image:
+      "https://imgs.search.brave.com/F6U8SuvmUaKeJFaRbJL7KS4Z8sOpdI_CkDYjKplMkco/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pb2Uu/aWlzYy5hYy5pbi93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMS8w/NC9BYm91dC5qcGc",
+  },
+  {
+    keywords: ["nlsiu", "law", "national law"],
+    image:
+      "https://imgs.search.brave.com/JrF4owoO--nk7b2c3g40gh4rNbfd9WDGTm6S1UaPf6E/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bGF3ZW50cmFuY2Uu/Y29tL2ltZy9ubHNp/dS5qcGc",
+  },
+  {
+    keywords: ["iit dharwad", "dharwad"],
+    image:
+      "https://imgs.search.brave.com/ak4H8eDXAKrWzqOJB1r8SE-6hHTMCKdYyTOdXMamviM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/aWl0c3lzdGVtLmFj/LmluL3RoZW1lcy9i/ZmQvYXNzZXRzL2lt/YWdlL3NsaWRlci9p/aXQtZGhhcndhZC5q/cGc",
+  },
+  {
+    keywords: ["iit", "bangalore", "technology"],
+    image:
+      "https://imgs.search.brave.com/SbXC6bpF3FFYV1hzToptw4GPgNhTerXifFvEbmUnLMI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQx/MjQ5NDk0MS9waG90/by9pbmRpYW4taW5z/dGl0dXRlLW9mLXRl/Y2hub2xvZ3kta2hh/cmFncHVyLWlpdC1r/aGFyYWdwdXIuanBn/P3M9NjEyeDYxMiZ3/PTAmaz0yMCZjPW40/anhTQnVWQVdRWUM0/MGFnSjlQV2dmUmY4/ZWdBUmJGQlptT1NR/eFJEU0E9",
+  },
+];
+
+// Static fallback colleges shown when API returns nothing
+const fallbackColleges: College[] = [
+  {
+    _id: "1",
+    name: "IIM Bangalore",
+    location: "Bannerghatta Road, Bangalore",
+    city: "Bangalore",
+    rating: 4.9,
+    image: collegeImageOverrides[0].image,
+  },
+  {
+    _id: "2",
+    name: "IISc Bangalore",
+    location: "CV Raman Road, Bangalore",
+    city: "Bangalore",
+    rating: 4.9,
+    image: collegeImageOverrides[1].image,
+  },
+  {
+    _id: "3",
+    name: "NLSIU Bangalore",
+    location: "Nagarbhavi, Bangalore",
+    city: "Bangalore",
+    rating: 4.8,
+    image: collegeImageOverrides[2].image,
+  },
+  {
+    _id: "4",
+    name: "IIT Dharwad",
+    location: "WALMI Campus, Dharwad",
+    city: "Dharwad",
+    rating: 4.7,
+    image: collegeImageOverrides[3].image,
+  },
+  {
+    _id: "5",
+    name: "IIT Bangalore",
+    location: "Malleshwaram, Bangalore",
+    city: "Bangalore",
+    rating: 4.8,
+    image: collegeImageOverrides[4].image,
+  },
+  {
+    _id: "6",
+    name: "IISc – Centre for Biological Sciences",
+    location: "CV Raman Road, Bangalore",
+    city: "Bangalore",
+    rating: 4.7,
+    image: collegeImageOverrides[1].image,
+  },
+];
+
+/** Return an override image URL if the college name matches any keyword set */
+function resolveImage(college: College): string {
+  const nameLower = college.name.toLowerCase();
+  for (const entry of collegeImageOverrides) {
+    if (entry.keywords.some((kw) => nameLower.includes(kw))) {
+      return entry.image;
+    }
+  }
+  return college.image;
+}
+
 export default function TopColleges() {
   const [colleges, setColleges] = useState<College[]>([]);
   const [loading, setLoading] = useState(true);
@@ -34,11 +126,14 @@ export default function TopColleges() {
         // Fetch medical colleges specifically
         const response = await fetch(`${API_URL}/api/colleges?limit=6&category=medical`);
         const data = await response.json();
-        if (data.success) {
+        if (data.success && data.data?.length > 0) {
           setColleges(data.data);
+        } else {
+          setColleges(fallbackColleges);
         }
       } catch (error) {
         console.error("Error fetching colleges:", error);
+        setColleges(fallbackColleges);
       } finally {
         setLoading(false);
       }
@@ -83,7 +178,17 @@ export default function TopColleges() {
               const colors = cardColors[index % cardColors.length];
               return (
                 <div key={college._id} className="bg-white rounded-2xl overflow-hidden shadow-lg card-hover">
-                  <div className={`relative h-48 bg-gradient-to-br ${colors.gradient}`}>
+                  <div className="relative h-48 overflow-hidden">
+                    {/* College Image */}
+                    <img 
+                      src={resolveImage(college)} 
+                      alt={college.name}
+                      className="w-full h-full object-cover"
+                      onError={(e) => { (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x200?text=' + encodeURIComponent(college.name); }}
+                    />
+                    {/* Dark overlay for better text visibility */}
+                    <div className="absolute inset-0 bg-black/20"></div>
+                    
                     <div className="absolute top-4 right-4">
                       <span className="bg-white/90 backdrop-blur-sm text-gray-800 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
                         <i className="fas fa-star text-yellow-400"></i> {college.rating}
