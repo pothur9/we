@@ -27,17 +27,29 @@ const cardColors = [
 // Override images by college name (partial, case-insensitive match)
 const collegeImageOverrides: { keywords: string[]; image: string }[] = [
   {
-    keywords: ["iim", "bangalore", "management"],
+    // Must come BEFORE general "iisc/science" — matches "IISc, Dept of Management Studies" (card 3)
+    keywords: ["management studies", "department of management"],
+    image:
+      "https://imgs.search.brave.com/LzjRJRY7q4fAucHg8-kaBw2M-yRo6mEu25MxyuQnXjI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZS1zdGF0aWMuY29s/bGVnZWR1bmlhLmNv/bS9wdWJsaWMvY29s/bGVnZV9kYXRhL2lt/YWdlcy9jYW1wdXNp/bWFnZS8xNDM0NjA4/OTY2NC5qcGc",
+  },
+  {
+    // Matches "International Institute of Information Technology - IIIT-B" (card 6)
+    keywords: ["iiit", "information technology"],
+    image:
+      "https://imgs.search.brave.com/ak4H8eDXAKrWzqOJB1r8SE-6hHTMCKdYyTOdXMamviM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/aWl0c3lzdGVtLmFj/LmluL3RoZW1lcy9i/ZmQvYXNzZXRzL2lt/YWdlL3NsaWRlci9p/aXQtZGhhcndhZC5q/cGc",
+  },
+  {
+    keywords: ["iim", "management"],
     image:
       "https://imgs.search.brave.com/aqpFS0bSlj5-z0E2VX8ZIxUSfELHJl0jcnpNg3XIVvI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9kcnVw/YWwubWJhdW5pdmVy/c2UuY29tL3NpdGVz/L2RlZmF1bHQvZmls/ZXMvMjAyNS0wNi9w/dWJsaWMlMjAoMSkl/MjAoMSkuanBn",
   },
   {
-    keywords: ["iisc", "science", "indian institute of science"],
+    keywords: ["iisc", "indian institute of science"],
     image:
       "https://imgs.search.brave.com/F6U8SuvmUaKeJFaRbJL7KS4Z8sOpdI_CkDYjKplMkco/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pb2Uu/aWlzYy5hYy5pbi93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMS8w/NC9BYm91dC5qcGc",
   },
   {
-    keywords: ["nlsiu", "law", "national law"],
+    keywords: ["nlsiu", "national law school", "law school of india"],
     image:
       "https://imgs.search.brave.com/JrF4owoO--nk7b2c3g40gh4rNbfd9WDGTm6S1UaPf6E/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bGF3ZW50cmFuY2Uu/Y29tL2ltZy9ubHNp/dS5qcGc",
   },
@@ -61,7 +73,7 @@ const fallbackColleges: College[] = [
     location: "Bannerghatta Road, Bangalore",
     city: "Bangalore",
     rating: 4.9,
-    image: collegeImageOverrides[0].image,
+    image: collegeImageOverrides[1].image, // IIM entry
   },
   {
     _id: "2",
@@ -69,7 +81,7 @@ const fallbackColleges: College[] = [
     location: "CV Raman Road, Bangalore",
     city: "Bangalore",
     rating: 4.9,
-    image: collegeImageOverrides[1].image,
+    image: collegeImageOverrides[2].image, // IISc entry
   },
   {
     _id: "3",
@@ -77,7 +89,7 @@ const fallbackColleges: College[] = [
     location: "Nagarbhavi, Bangalore",
     city: "Bangalore",
     rating: 4.8,
-    image: collegeImageOverrides[2].image,
+    image: collegeImageOverrides[3].image, // NLSIU entry
   },
   {
     _id: "4",
@@ -85,7 +97,7 @@ const fallbackColleges: College[] = [
     location: "WALMI Campus, Dharwad",
     city: "Dharwad",
     rating: 4.7,
-    image: collegeImageOverrides[3].image,
+    image: collegeImageOverrides[4].image, // IIT Dharwad entry
   },
   {
     _id: "5",
@@ -93,7 +105,7 @@ const fallbackColleges: College[] = [
     location: "Malleshwaram, Bangalore",
     city: "Bangalore",
     rating: 4.8,
-    image: collegeImageOverrides[4].image,
+    image: collegeImageOverrides[5].image, // IIT entry
   },
   {
     _id: "6",
@@ -101,7 +113,7 @@ const fallbackColleges: College[] = [
     location: "CV Raman Road, Bangalore",
     city: "Bangalore",
     rating: 4.7,
-    image: collegeImageOverrides[1].image,
+    image: collegeImageOverrides[0].image, // Biological Sciences entry
   },
 ];
 
