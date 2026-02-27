@@ -379,6 +379,30 @@ async function seedColleges() {
     await College.deleteMany({});
     console.log('🗑️ Existing colleges deleted');
 
+    // Diverse Unsplash image URLs for colleges
+    const collegeImages = [
+      'https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80', // University building
+      'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=800&q=80', // Campus architecture
+      'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80', // University campus
+      'https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?w=800&q=80', // Modern college building
+      'https://images.unsplash.com/photo-1519452575417-564c1401ecc0?w=800&q=80', // Medical college
+      'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80', // Medical students
+      'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&q=80', // College library
+      'https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=800&q=80', // University hall
+      'https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?w=800&q=80', // Medical building
+      'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80', // Campus exterior
+      'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80', // University entrance
+      'https://images.unsplash.com/photo-1568792923760-d70635a89fdc?w=800&q=80', // College campus
+      'https://images.unsplash.com/photo-1590012314607-cda9d9b699ae?w=800&q=80', // Medical facility
+      'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=800&q=80', // University building
+      'https://images.unsplash.com/photo-1581093458791-9d42e1c5e2f9?w=800&q=80', // Modern campus
+      'https://images.unsplash.com/photo-1564981797816-1043664bf78d?w=800&q=80', // College building
+      'https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80', // Classic university
+      'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80', // Students campus
+      'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=800&q=80', // College courtyard
+      'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80', // University students
+    ];
+
     // Prepare colleges with full data
     const colleges = collegesData.map((college, index) => ({
       name: college.name,
@@ -386,7 +410,7 @@ async function seedColleges() {
       city: college.city,
       state: 'Karnataka',
       rating: college.rating,
-      image: `https://images.unsplash.com/photo-156277405${3 + (index % 10)}-701939374585?w=400`,
+      image: collegeImages[index % collegeImages.length],
       courses: allCourses, // All colleges have all courses
       fees: 'Contact for fees',
     }));
